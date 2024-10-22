@@ -17,4 +17,9 @@ public class AuthController {
         model.addAttribute("loginDto", new LoginDto());
         return "login";
     }
+
+    @GetMapping("/home")
+    public String showHomeForm(Model model) {
+        return "home";
+    }
 }
