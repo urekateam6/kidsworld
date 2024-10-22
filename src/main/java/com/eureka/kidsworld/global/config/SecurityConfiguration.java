@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout") // 로그아웃 URL 설정 (기본값은 "/logout")
-                        .logoutSuccessUrl("/custom-logout-success") // 로그아웃 후 이동할 URL
+                        .logoutSuccessUrl("/login") // 로그아웃 후 이동할 URL
                         .invalidateHttpSession(true) // 로그아웃 시 세션 무효화
                         .deleteCookies("JSESSIONID") // 로그아웃 시 JSESSIONID 쿠키 삭제
                 )
