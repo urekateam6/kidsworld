@@ -11,7 +11,5 @@ public class UserFeedbackDto {
     private Long feedbackId;
     private Long userId;
     private Long bookId;
-    private Boolean liked;
-    private Boolean disliked;
-    private LocalDateTime feedbackDate;
+    private Boolean isLike;
 }

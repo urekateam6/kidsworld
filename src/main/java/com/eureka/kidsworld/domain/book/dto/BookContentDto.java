@@ -17,7 +17,7 @@ public class BookContentDto {
     private Integer recommendedAge;
     private Map<String, Float> mbtiTraits;
 
-    public BookContent toEntity(){
+    public BookContent toEntity() {
         return BookContent.builder()
                 .bookId(bookId)
                 .title(title)

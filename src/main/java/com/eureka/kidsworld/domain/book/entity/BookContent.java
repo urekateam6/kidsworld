@@ -9,7 +9,6 @@ import java.util.Map;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 public class BookContent extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,12 +42,12 @@ public class BookContent extends BaseTimeEntity {
         this.mbtiTraits = mbtiTraits;
     }
 
-    public void update(BookContent updatedBookContent){
-        this.title=updatedBookContent.getTitle();
-        this.summary=updatedBookContent.getSummary();
-        this.author=updatedBookContent.getAuthor();
-        this.publisher=updatedBookContent.getPublisher();
-        this.recommendedAge=updatedBookContent.getRecommendedAge();
-        this.mbtiTraits=updatedBookContent.getMbtiTraits();
+    public void update(BookContent updatedBookContent) {
+        this.title = updatedBookContent.getTitle();
+        this.summary = updatedBookContent.getSummary();
+        this.author = updatedBookContent.getAuthor();
+        this.publisher = updatedBookContent.getPublisher();
+        this.recommendedAge = updatedBookContent.getRecommendedAge();
+        this.mbtiTraits = updatedBookContent.getMbtiTraits();
     }
 }

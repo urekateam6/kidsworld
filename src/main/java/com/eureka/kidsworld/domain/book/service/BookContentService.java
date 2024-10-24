@@ -3,6 +3,7 @@ package com.eureka.kidsworld.domain.book.service;
 import com.eureka.kidsworld.domain.book.dto.BookContentDto;
 import com.eureka.kidsworld.domain.book.entity.BookContent;
 import com.eureka.kidsworld.domain.book.repository.BookContentRepository;
+import com.eureka.kidsworld.domain.user.entity.User;
 import com.eureka.kidsworld.global.exception.BookContentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ import java.util.stream.Collectors;
 public class BookContentService {
     private final BookContentRepository bookContentRepository;
 
+    @Transactional(readOnly = true)
+    public Optional<BookContent> findByBookContentId(Long bookContentId) {
+        return bookContentRepository.findById(bookContentId);
+    }
+
     public BookContentDto addBookContent(BookContent bookContent) {
         BookContent savedBook = bookContentRepository.save(bookContent);
         return convertToDto(savedBook);
@@ -24,7 +30,7 @@ public class BookContentService {
 
     public BookContentDto updateBookContent(Long bookId, BookContent updatedBookContent) {
         BookContent book = bookContentRepository.findById(bookId)
-                .orElseThrow(()->new BookContentNotFoundException("해당하는 도서가 없습니다."));
+                .orElseThrow(() -> new BookContentNotFoundException("해당하는 도서가 없습니다."));
 
         book.update(updatedBookContent);
 
@@ -34,6 +40,7 @@ public class BookContentService {
     public void deleteBookContent(Long bookId) {
         bookContentRepository.deleteById(bookId);
     }
+
 
     @Transactional(readOnly = true)
     public List<BookContentDto> searchBooksByTitle(String title) {

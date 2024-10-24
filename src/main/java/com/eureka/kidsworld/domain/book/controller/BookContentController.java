@@ -25,7 +25,7 @@ public class BookContentController {
 
     @PutMapping("/{bookId}")
     public ResponseEntity<?> updateBook(@PathVariable Long bookId,
-                                                     @RequestBody BookContentDto requestDto) {
+                                        @RequestBody BookContentDto requestDto) {
         BookContent updatedBook = requestDto.toEntity();
         BookContentDto bookDto = bookContentService.updateBookContent(bookId, updatedBook);
         return ResponseEntity.ok(bookDto);
