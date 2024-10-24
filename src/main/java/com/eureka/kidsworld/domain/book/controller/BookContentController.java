@@ -44,7 +44,7 @@ public class BookContentController {
     }
 
     @GetMapping("/recommend")
-    public ResponseEntity<List<BookContentDto>> recommendBooks(@RequestParam Integer age) {
+    public ResponseEntity<?> recommendBooks(@RequestParam Integer age) {
         List<BookContentDto> books = bookContentService.recommendBooksByAge(age);
         return ResponseEntity.ok(books);
     }
