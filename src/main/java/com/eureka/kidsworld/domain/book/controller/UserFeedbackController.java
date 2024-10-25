@@ -9,11 +9,13 @@ import com.eureka.kidsworld.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/feedback")
 @RequiredArgsConstructor
 public class UserFeedbackController {
@@ -21,27 +23,34 @@ public class UserFeedbackController {
     private final UserService userService;
     private final BookContentService bookContentService;
 
-    @PostMapping
-    public ResponseEntity<UserFeedbackDto> addFeedback(@RequestBody UserFeedbackDto requestDto) {
-        // todo: 커스텀 예외로 변경
-        User user = userService.findByUserId(requestDto.getUserId()).orElseThrow(()->new RuntimeException("존재하지 않는 회원입니다."));
-        BookContent book = bookContentService.findByBookContentId(requestDto.getBookId()).orElseThrow(()->new RuntimeException("존재하지 않는 도서압니다"));
-        UserFeedbackDto feedbackDto = userFeedbackService.addFeedback(user, book, requestDto.getLiked());
-        return ResponseEntity.status(HttpStatus.CREATED).body(feedbackDto);
-    }
-
+    // 피드백 목록 페이지
     @GetMapping
-    public ResponseEntity<List<UserFeedbackDto>> getUserFeedback(@RequestParam Long userId, @RequestParam Long bookId) {
-        User user = userService.findByUserId(userId).orElseThrow(()->new RuntimeException("존재하지 않는 회원입니다."));
-        BookContent book = bookContentService.findByBookContentId(bookId).orElseThrow(()->new RuntimeException("존재하지 않는 도서압니다"));
-        List<UserFeedbackDto> feedbacks = userFeedbackService.getUserFeedback(user, book);
-        return ResponseEntity.ok(feedbacks);
+    public String getFeedbackList(Model model) {
+        List<UserFeedbackDto> feedbackList = userFeedbackService.getAllFeedbacks();
+        model.addAttribute("feedbacks", feedbackList);
+        return "feedback/list"; // feedback/list.html 페이지를 렌더링
     }
 
-    @GetMapping("/likes")
-    public ResponseEntity<Long> getBookLikeCount(@RequestParam Long bookId) {
-        BookContent book = bookContentService.findByBookContentId(bookId).orElseThrow(()->new RuntimeException("존재하지 않는 도서압니다"));
-        Long likeCount = userFeedbackService.countLikesForBook(book);
-        return ResponseEntity.ok(likeCount);
+    // 피드백 추가 폼 페이지
+    @GetMapping("/new")
+    public String showAddFeedbackForm(Model model) {
+        model.addAttribute("feedback", new UserFeedbackDto());
+        return "feedback/add"; // feedback/add.html 페이지를 렌더링
+    }
+
+    // 피드백 추가 처리
+    @PostMapping
+    public String addFeedback(@ModelAttribute("feedback") UserFeedbackDto feedbackDto) {
+
+        userFeedbackService.addFeedback(feedbackDto);
+        return "redirect:/feedback";
+    }
+
+    // 피드백 상세 페이지
+    @GetMapping("/{id}")
+    public String getFeedbackDetail(@PathVariable Long id, Model model) {
+        UserFeedbackDto feedbackDto = userFeedbackService.getFeedbackById(id);
+        model.addAttribute("feedback", feedbackDto);
+        return "feedback/detail"; // feedback/detail.html 페이지를 렌더링
     }
 }

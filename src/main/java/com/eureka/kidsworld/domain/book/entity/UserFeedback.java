@@ -22,14 +22,14 @@ public class UserFeedback extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    private BookContent book;
+    private BookContent bookContent;
 
     private Boolean liked;
 
     @Builder
-    public UserFeedback(User user, BookContent book, Boolean liked) {
+    public UserFeedback(User user, BookContent bookContent, Boolean liked) {
         this.user = user;
-        this.book = book;
+        this.bookContent = bookContent;
         this.liked = liked;
     }
 }

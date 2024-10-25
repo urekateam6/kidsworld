@@ -6,12 +6,14 @@
 <body>
 <h1>Book List</h1>
 <a href="/books/new">Add New Book</a>
+<a href="/books/recommend">Recommended Books</a>
 <table border="1">
     <thead>
     <tr>
         <th>Title</th>
         <th>Author</th>
         <th>Publisher</th>
+        <th>Recommended Age</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -20,6 +22,7 @@
         <td th:text="${book.title}">Title</td>
         <td th:text="${book.author}">Author</td>
         <td th:text="${book.publisher}">Publisher</td>
+        <td th:text="${book.recommendedAge}">Age</td>
         <td>
             <a th:href="@{/books/{id}(id=${book.bookId})}">View</a>
         </td>

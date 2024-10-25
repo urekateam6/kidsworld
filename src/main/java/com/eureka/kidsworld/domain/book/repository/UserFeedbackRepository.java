@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface UserFeedbackRepository extends JpaRepository<UserFeedback, Long> {
     // 특정 사용자와 도서에 대한 피드백 조회
-    List<UserFeedback> findByUserAndBook(User user, BookContent book);
+    List<UserFeedback> findByUserAndBookContent(User user, BookContent bookContent);
 
     // 특정 도서에 대한 좋아요 개수 조회
-    Long countByBookAndLiked(BookContent book, Boolean liked);
+    Long countByBookContentAndLiked(BookContent book, Boolean liked);
 }
