@@ -24,12 +24,12 @@ public class UserFeedback extends BaseTimeEntity {
     @JoinColumn(name = "book_id")
     private BookContent book;
 
-    private Boolean isLike;
+    private Boolean liked;
 
     @Builder
-    public UserFeedback(User user, BookContent book, Boolean isLike) {
+    public UserFeedback(User user, BookContent book, Boolean liked) {
         this.user = user;
         this.book = book;
-        this.isLike = isLike;
+        this.liked = liked;
     }
 }

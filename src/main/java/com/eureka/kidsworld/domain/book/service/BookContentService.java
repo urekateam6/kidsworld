@@ -19,6 +19,13 @@ public class BookContentService {
     private final BookContentRepository bookContentRepository;
 
     @Transactional(readOnly = true)
+    public List<BookContentDto> getAllBooks() {
+        return bookContentRepository.findAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public Optional<BookContent> findByBookContentId(Long bookContentId) {
         return bookContentRepository.findById(bookContentId);
     }
@@ -66,5 +73,14 @@ public class BookContentService {
                 bookContent.getRecommendedAge(),
                 bookContent.getMbtiTraits()
         );
+    }
+
+    @Transactional
+    public BookContentDto getBookContentById(Long bookId) {
+        BookContent book = bookContentRepository.findById(bookId)
+                .orElseThrow(() -> new BookContentNotFoundException("해당하는 도서가 없습니다."));
+
+        return convertToDto(book);
+
     }
 }

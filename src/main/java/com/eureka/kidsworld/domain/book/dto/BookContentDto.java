@@ -3,11 +3,13 @@ package com.eureka.kidsworld.domain.book.dto;
 import com.eureka.kidsworld.domain.book.entity.BookContent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class BookContentDto {
     private Long bookId;
     private String title;

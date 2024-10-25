@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 public class UserFeedbackService {
     private final UserFeedbackRepository userFeedbackRepository;
 
-    public UserFeedbackDto addFeedback(User user, BookContent book, Boolean isLike) {
+    public UserFeedbackDto addFeedback(User user, BookContent book, Boolean liked) {
         UserFeedback feedback=UserFeedback.builder()
                 .user(user)
                 .book(book)
-                .isLike(isLike)
+                .liked(liked)
                 .build();
         return convertToDto(userFeedbackRepository.save(feedback));
     }
@@ -32,7 +32,7 @@ public class UserFeedbackService {
     }
 
     public Long countLikesForBook(BookContent book) {
-        return userFeedbackRepository.countByBookAndIsLike(book, true);
+        return userFeedbackRepository.countByBookAndLiked(book, true);
     }
 
     private UserFeedbackDto convertToDto(UserFeedback feedback) {
@@ -40,7 +40,7 @@ public class UserFeedbackService {
                 feedback.getFeedbackId(),
                 feedback.getUser().getUserId(),
                 feedback.getBook().getBookId(),
-                feedback.getIsLike()
+                feedback.getLiked()
         );
     }
 }

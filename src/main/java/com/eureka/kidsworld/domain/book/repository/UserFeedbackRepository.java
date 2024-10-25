@@ -12,5 +12,5 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, Long
     List<UserFeedback> findByUserAndBook(User user, BookContent book);
 
     // 특정 도서에 대한 좋아요 개수 조회
-    Long countByBookAndIsLike(BookContent book, Boolean isLike);
+    Long countByBookAndLiked(BookContent book, Boolean liked);
 }

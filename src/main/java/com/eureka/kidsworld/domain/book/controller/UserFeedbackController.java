@@ -9,7 +9,6 @@ import com.eureka.kidsworld.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class UserFeedbackController {
         // todo: 커스텀 예외로 변경
         User user = userService.findByUserId(requestDto.getUserId()).orElseThrow(()->new RuntimeException("존재하지 않는 회원입니다."));
         BookContent book = bookContentService.findByBookContentId(requestDto.getBookId()).orElseThrow(()->new RuntimeException("존재하지 않는 도서압니다"));
-        UserFeedbackDto feedbackDto = userFeedbackService.addFeedback(user, book, requestDto.getIsLike());
+        UserFeedbackDto feedbackDto = userFeedbackService.addFeedback(user, book, requestDto.getLiked());
         return ResponseEntity.status(HttpStatus.CREATED).body(feedbackDto);
     }
 
