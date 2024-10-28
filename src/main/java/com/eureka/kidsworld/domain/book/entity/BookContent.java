@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,12 +28,11 @@ public class BookContent extends BaseTimeEntity {
 
     @ElementCollection
     @CollectionTable(name = "book_mbti_traits", joinColumns = @JoinColumn(name = "book_id"))
-    @MapKeyColumn(name = "mbti_trait")
-    @Column(name = "trait_value")
-    private Map<String, Float> mbtiTraits;
+    @Column(name = "mbti_trait")
+    private Set<String> mbtiTraits;
 
     @Builder
-    public BookContent(Long bookId, String title, String summary, String author, String publisher, Integer recommendedAge, Map<String, Float> mbtiTraits) {
+    public BookContent(Long bookId, String title, String summary, String author, String publisher, Integer recommendedAge, Set<String> mbtiTraits) {
         this.bookId = bookId;
         this.title = title;
         this.summary = summary;

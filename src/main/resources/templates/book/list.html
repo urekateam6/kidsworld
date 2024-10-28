@@ -4,30 +4,79 @@
     <title>Book List</title>
 </head>
 <body>
+
+<!-- 성공 메시지 알림 표시 -->
+<div th:if="${successMessage}" style="background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; margin-bottom: 20px;">
+    <p th:text="${successMessage}">도서가 추가되었습니다.</p>
+</div>
+
 <h1>Book List</h1>
 <a href="/books/new">Add New Book</a>
-<a href="/books/recommend">Recommended Books</a>
+<form th:action="@{/books/recommend}" method="post" style="display: inline;">
+    <label>Recommend Books by MBTI Traits:</label>
+
+    <!-- I/E 선택 -->
+    <div>
+        <label><input type="checkbox" name="mbtiTraits" value="I"/> Introversion (I)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="E"/> Extraversion (E)</label>
+    </div>
+
+    <!-- N/S 선택 -->
+    <div>
+        <label><input type="checkbox" name="mbtiTraits" value="N"/> Intuition (N)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="S"/> Sensing (S)</label>
+    </div>
+
+    <!-- F/T 선택 -->
+    <div>
+        <label><input type="checkbox" name="mbtiTraits" value="F"/> Feeling (F)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="T"/> Thinking (T)</label>
+    </div>
+
+    <!-- P/J 선택 -->
+    <div>
+        <label><input type="checkbox" name="mbtiTraits" value="P"/> Perceiving (P)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="J"/> Judging (J)</label>
+    </div>
+
+    <button type="submit">Get Recommendations</button>
+</form>
+
+
 <table border="1">
     <thead>
     <tr>
         <th>Title</th>
+        <th>Summary</th>
         <th>Author</th>
         <th>Publisher</th>
         <th>Recommended Age</th>
+        <th>MBTI Traits</th>
         <th>Actions</th>
     </tr>
     </thead>
-    <tbody>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.title}">Title</td>
-        <td th:text="${book.author}">Author</td>
-        <td th:text="${book.publisher}">Publisher</td>
-        <td th:text="${book.recommendedAge}">Age</td>
-        <td>
-            <a th:href="@{/books/{id}(id=${book.bookId})}">View</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-</body>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}">Title</td>
+                <td th:text="${book.summary}">Summary</td>
+                <td th:text="${book.author}">Author</td>
+                <td th:text="${book.publisher}">Publisher</td>
+                <td th:text="${book.recommendedAge}">Age</td>
+                <td th:text="${book.mbtiTraitsAsString}">MBTI Traits</td>
+                <td>
+                    <a th:href="@{/books/{id}(id=${book.bookId})}">View</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // 페이지가 로드된 후 5초 후에 성공 메시지를 숨기기
+        setTimeout(function() {
+            var messageElement = document.getElementById("successMessage");
+            if (messageElement) {
+                messageElement.style.display = "none";
+            }
+        }, 5000); // 5000ms = 5초
+    </script>
 </html>
