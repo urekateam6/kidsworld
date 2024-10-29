@@ -1,21 +1,38 @@
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,git,java,eclipse,maven,intellij,gradle,netbeans,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,git,java,eclipse,maven,intellij,gradle,netbeans,visualstudiocode
+
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.externalToolBuilders/
+*.launch
+*.pydevproject
+.cproject
+.autotools
+.factorypath
+.buildpath
+.target
+.tern-project
+.springBeans
+.recommenders/
+.apt_generated/
+.apt_generated_test/
+.cache-main
+.scala_dependencies
+.worksheet
 
 ### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
 .springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+.sts4-cache/
 
 ### IntelliJ IDEA ###
 .idea
@@ -23,18 +40,43 @@ bin/
 *.iml
 *.ipr
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+### Visual Studio Code ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
 
-### VS Code ###
-.vscode/
+### Gradle ###
+.gradle
+build/
+**/build/
+!src/**/build/
+!gradle-wrapper.jar
+!gradle-wrapper.properties
 
-# Exclude application.properties
+# Ignore application.properties
 /src/main/resources/application.properties
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
