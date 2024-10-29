@@ -1,0 +1,13 @@
+question_id,question_text,optionA,optionB,mbti_typeA,mbti_typeB,imageFile
+1,깊은 숲 속에서 동물들의 파티를 발견했다!,인사한다,관찰한다,E,I,forest_party.png
+2,바닷가에서 조개가 말을 걸었다!,이야기한다,감상한다,E,I,beach_scene.png
+3,놀이공원에 도착했다!,줄을 선다,혼자 탄다,E,I,amusement_park.png
+4,과자 공장에서 직접 과자를 만들었다!,과자 만든다,맛을 본다,S,N,cookie.png
+5,하늘에 날아다니는 연을 본다!,연을 잡는다,관찰한다,S,N,kite.png
+6,친구가 들려주는 꿈 이야기를 듣는다!,들어준다,의미를 해석한다,S,N,dream.png
+7,친구가 게임에서 져서 속상해한다!,위로한다,무시한다,T,F,game.png
+8,동물 친구들이 서로 다툰다!,화해를 시킨다,지켜본다,T,F,fight.png
+9,미술대회에서 상을 받지 못해 슬퍼한다!,위로한다,다음 기회를 생각한다,T,F,sorrow.png
+10,친구와 놀러 갈 계획을 세운다!,계획을 세운다,즉흥적으로 간다,J,P,plan.png
+11,친구와 블록을 쌓아 성을 만든다!,성을 쌓는다,블록을 정리한다,J,P,castle.png
+12,방 정리를 해야 한다!,정리를 시작한다,다른 놀이를 한다,J,P,room.png

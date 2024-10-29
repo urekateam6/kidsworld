@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 질문</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 500px;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;  /* 수직 정렬 */
+            gap: 10px;               /* 버튼 사이 여백 */
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${question.questionText}">질문 텍스트</h1>
+
+    <div>
+        <img class="question-image" th:src="@{'/images/' + ${question.imageFile}}"
+             alt="Question Image">
+    </div>
+
+    <form action="/mbti/answer" method="post">
+        <div class="button-group">
+            <button type="submit" name="answer" th:value="${question.mbtiTypeA}">
+                <span th:text="${question.optionA}">옵션 A</span>
+            </button>
+            <button type="submit" name="answer" th:value="${question.mbtiTypeB}">
+                <span th:text="${question.optionB}">옵션 B</span>
+            </button>
+        </div>
+        <input type="hidden" name="questionId" th:value="${question.id}">
+    </form>
+</div>
+</body>
+</html>
