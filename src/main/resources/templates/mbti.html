@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI Test Question</title>
+</head>
+<body>
+<h1>MBTI 질문</h1>
+
+<!-- 질문 텍스트 -->
+<p th:text="${question.questionText}"></p>
+
+<!-- 질문에 맞는 이미지 표시 -->
+<img th:src="@{/images/{imageFile}(imageFile=${question.imageFile})}"
+     alt="질문 이미지" style="width:300px; height:auto;">
+
+<!-- 선택지 A -->
+<form action="/mbti/answer" method="post">
+    <input type="hidden" name="questionId" th:value="${question.id}">
+    <button type="submit" name="answer" th:value="${question.optionA}">
+        <span th:text="${question.optionA}"></span>
+    </button>
+</form>
+
+<!-- 선택지 B -->
+<form action="/mbti/answer" method="post">
+    <input type="hidden" name="questionId" th:value="${question.id}">
+    <button type="submit" name="answer" th:value="${question.optionB}">
+        <span th:text="${question.optionB}"></span>
+    </button>
+</form>
+
+</body>
+</html>
