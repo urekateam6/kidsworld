@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 public class BookContent extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,11 @@ public class BookContent extends BaseTimeEntity {
 
     @ElementCollection
     @CollectionTable(name = "book_mbti_traits", joinColumns = @JoinColumn(name = "book_id"))
-    @MapKeyColumn(name = "mbti_trait")
-    @Column(name = "trait_value")
-    private Map<String, Float> mbtiTraits;
+    @Column(name = "mbti_trait")
+    private Set<String> mbtiTraits;
 
     @Builder
-    public BookContent(Long bookId, String title, String summary, String author, String publisher, Integer recommendedAge, Map<String, Float> mbtiTraits) {
+    public BookContent(Long bookId, String title, String summary, String author, String publisher, Integer recommendedAge, Set<String> mbtiTraits) {
         this.bookId = bookId;
         this.title = title;
         this.summary = summary;
@@ -43,12 +42,12 @@ public class BookContent extends BaseTimeEntity {
         this.mbtiTraits = mbtiTraits;
     }
 
-    public void update(BookContent updatedBookContent){
-        this.title=updatedBookContent.getTitle();
-        this.summary=updatedBookContent.getSummary();
-        this.author=updatedBookContent.getAuthor();
-        this.publisher=updatedBookContent.getPublisher();
-        this.recommendedAge=updatedBookContent.getRecommendedAge();
-        this.mbtiTraits=updatedBookContent.getMbtiTraits();
+    public void update(BookContent updatedBookContent) {
+        this.title = updatedBookContent.getTitle();
+        this.summary = updatedBookContent.getSummary();
+        this.author = updatedBookContent.getAuthor();
+        this.publisher = updatedBookContent.getPublisher();
+        this.recommendedAge = updatedBookContent.getRecommendedAge();
+        this.mbtiTraits = updatedBookContent.getMbtiTraits();
     }
 }

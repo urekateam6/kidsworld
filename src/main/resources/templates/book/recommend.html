@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recommended Books</title>
+</head>
+<body>
+<h1>Recommended Books for Selected MBTI Traits</h1>
+<a href="/books">Back to Book List</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Summary</th>
+        <th>Author</th>
+        <th>Publisher</th>
+        <th>Recommended Age</th>
+        <th>MBTI Traits</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${recommendedBooks}">
+        <td th:text="${book.title}">Title</td>
+        <td th:text="${book.summary}">Summary</td>
+        <td th:text="${book.author}">Author</td>
+        <td th:text="${book.publisher}">Publisher</td>
+        <td th:text="${book.recommendedAge}">Age</td>
+        <td th:text="${book.mbtiTraitsAsString}">MBTI Traits</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
