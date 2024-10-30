@@ -1,16 +1,17 @@
-package org.example.mbti.service;
+package com.eureka.kidsworld.domain.mbti.service;
 
+import com.eureka.kidsworld.domain.mbti.dto.MbtiQuestionDto;
+import com.eureka.kidsworld.domain.mbti.dto.MbtiResultDto;
+import com.eureka.kidsworld.domain.mbti.entity.MbtiQuestion;
+import com.eureka.kidsworld.domain.mbti.entity.MbtiResult;
+import com.eureka.kidsworld.domain.mbti.entity.MbtiTrait;
+import com.eureka.kidsworld.domain.mbti.repository.MbtiQuestionRepository;
+import com.eureka.kidsworld.domain.mbti.repository.MbtiResultRepository;
+import com.eureka.kidsworld.domain.mbti.repository.MbtiTraitRepository;
 import lombok.RequiredArgsConstructor;
-import org.example.mbti.domain.dto.MbtiQuestionDto;
-import org.example.mbti.domain.dto.MbtiResultDto;
-import org.example.mbti.domain.entity.MbtiQuestion;
-import org.example.mbti.domain.entity.MbtiTrait; // 추가
-import org.example.mbti.repository.MbtiQuestionRepository;
-import org.example.mbti.repository.MbtiTraitRepository; // 추가
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -18,7 +19,9 @@ import java.util.Map;
 public class MbtiService {
 
     private final MbtiQuestionRepository mbtiQuestionRepository;
-    private final MbtiTraitRepository mbtiTraitRepository; // 추가
+    private final MbtiTraitRepository mbtiTraitRepository;
+    private final MbtiResultRepository mbtiResultRepository; // 결과 리포지토리 추가
+
 
     public MbtiQuestionDto getMbtiQuestionById(Long id) {
         MbtiQuestion question = mbtiQuestionRepository.findById(id)
@@ -27,7 +30,6 @@ public class MbtiService {
     }
 
     public String calculateMbtiType(Map<Integer, String> answers) {
-        // answers가 null인 경우 빈 맵으로 초기화
         if (answers == null) {
             answers = new HashMap<>();
         }
@@ -56,8 +58,6 @@ public class MbtiService {
         return eOrI + sOrN + tOrF + jOrP;
     }
 
-
-    // MBTI 결과를 가져오는 메서드 추가
     public MbtiResultDto getMbtiResult(String mbtiType) {
         MbtiTrait trait = mbtiTraitRepository.findByMbtiType(mbtiType);
         if (trait == null) {
@@ -70,7 +70,16 @@ public class MbtiService {
                 trait.getStrength(),
                 trait.getWeakness(),
                 trait.getDescription(),
-                trait.getImagePath()  // 이미지 경로 추가
+                trait.getImagePath()
         );
     }
+    public void saveMbtiResult(Long childId, String mbtiType) {
+        MbtiResult result = MbtiResult.builder()
+                .childId(childId) // User ID를 childId로 설정
+                .mbtiResult(mbtiType)
+                .build();
+
+        mbtiResultRepository.save(result); // mbtiResultRepository를 통해 DB에 저장
+    }
+
 }

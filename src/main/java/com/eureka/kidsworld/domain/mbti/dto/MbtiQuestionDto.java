@@ -1,8 +1,8 @@
-package com.eureka.kidsworld.dto;
+package com.eureka.kidsworld.domain.mbti.dto;
 
+import com.eureka.kidsworld.domain.mbti.entity.MbtiQuestion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import com.eureka.kidsworld.domain.entity.MbtiQuestion;  // 엔티티 경로 수정
 
 @Getter
 @AllArgsConstructor

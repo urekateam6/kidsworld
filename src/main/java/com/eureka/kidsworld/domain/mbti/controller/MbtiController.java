@@ -1,14 +1,14 @@
-package org.example.mbti.controller;
+package com.eureka.kidsworld.domain.mbti.controller;
 
+import com.eureka.kidsworld.domain.mbti.dto.MbtiQuestionDto;
+import com.eureka.kidsworld.domain.mbti.dto.MbtiResultDto;
+import com.eureka.kidsworld.domain.mbti.service.MbtiService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.mbti.domain.dto.MbtiQuestionDto;
-import org.example.mbti.domain.dto.MbtiResultDto;
-import org.example.mbti.service.MbtiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,11 +49,19 @@ public class MbtiController {
     @GetMapping("/result")
     public String getResultPage(HttpSession session, Model model) {
         Map<Integer, String> answers = (Map<Integer, String>) session.getAttribute("answers");
-        String mbtiType = mbtiService.calculateMbtiType(answers); // 이 부분에서 문제가 발생할 수 있음
-        MbtiResultDto resultDto = mbtiService.getMbtiResult(mbtiType); // 이 부분도 확인 필요
+        String mbtiType = mbtiService.calculateMbtiType(answers);
+
+        // Child ID를 얻는 방법 (User ID를 통해 얻거나 세션에서 가져올 수 있음)
+        Long childId = (Long) session.getAttribute("child_id"); // 예시로 세션에서 가져오는 경우
+
+        // MBTI 결과 저장
+        mbtiService.saveMbtiResult(childId, mbtiType);
+
+        MbtiResultDto resultDto = mbtiService.getMbtiResult(mbtiType);
         model.addAttribute("result", resultDto);
         session.removeAttribute("answers");
-        return "mbtiResult";  // templates/mbtiResult.html
+        return "mbtiResult";
     }
+
 
 }

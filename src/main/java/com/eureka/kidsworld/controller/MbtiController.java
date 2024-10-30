@@ -1,8 +1,6 @@
 package com.eureka.kidsworld.controller;
 
 import lombok.RequiredArgsConstructor;
-import com.eureka.kidsworld.dto.MbtiQuestionDto;  // DTO 경로 수정
-import com.eureka.kidsworld.dto.MbtiResultDto;    // DTO 경로 수정
 import com.eureka.kidsworld.service.MbtiService;  // 서비스 경로 수정
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

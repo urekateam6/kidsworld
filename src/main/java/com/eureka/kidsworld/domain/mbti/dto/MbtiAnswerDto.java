@@ -1,4 +1,4 @@
-package com.eureka.kidsworld.dto;
+package com.eureka.kidsworld.domain.mbti.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

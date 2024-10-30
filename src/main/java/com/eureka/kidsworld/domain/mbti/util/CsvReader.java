@@ -1,6 +1,6 @@
-package org.example.mbti.util;
+package com.eureka.kidsworld.domain.mbti.util;
 
-import org.example.mbti.domain.entity.MbtiQuestion;
+import com.eureka.kidsworld.domain.mbti.entity.MbtiQuestion;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

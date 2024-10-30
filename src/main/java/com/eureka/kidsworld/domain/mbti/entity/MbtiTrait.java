@@ -1,4 +1,4 @@
-package com.eureka.kidsworld.domain.entity;
+package com.eureka.kidsworld.domain.mbti.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
