@@ -11,13 +11,13 @@ import static com.eureka.kidsworld.domain.user.entity.Permission.*;
 
 @Getter
 public enum Role {
-    ADMIN(Set.of(
+    ROLE_ADMIN(Set.of(
             READ,  //Permission enum class
             CREATE,
             UPDATE,
             DELETE
     )),
-    USER(Set.of(
+    ROLE_USER(Set.of(
             READ,
             CREATE,
             UPDATE
@@ -35,7 +35,7 @@ public enum Role {
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toList());
 
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        authorities.add(new SimpleGrantedAuthority(this.name()));
 
         return authorities;
     }
