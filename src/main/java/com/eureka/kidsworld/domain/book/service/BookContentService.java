@@ -104,6 +104,5 @@ public class BookContentService {
                 .orElseThrow(() -> new BookContentNotFoundException("해당하는 도서가 없습니다."));
 
         return convertToDto(book);
-
     }
 }
