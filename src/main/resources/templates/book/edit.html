@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Book</title>
+</head>
+<body>
+<h1>Edit Book</h1>
+<form th:action="@{/books/update/{id}(id=${book.bookId})}" method="post">
+    <div>
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" th:value="${book.title}" required />
+    </div>
+    <div>
+        <label for="summary">줄거리:</label>
+        <textarea id="summary" name="summary" required th:text="${book.summary}"></textarea>
+    </div>
+    <div>
+        <label for="author">작가:</label>
+        <input type="text" id="author" name="author" th:value="${book.author}" required />
+    </div>
+    <div>
+        <label for="publisher">출판사:</label>
+        <input type="text" id="publisher" name="publisher" th:value="${book.publisher}" required />
+    </div>
+    <div>
+        <label for="recommendedAge">권장연령:</label>
+        <input type="number" id="recommendedAge" name="recommendedAge" th:value="${book.recommendedAge}" required />
+    </div>
+
+    <!-- MBTI Traits -->
+    <div>
+        <label>MBTI Traits:</label>
+        <div>
+            <label><input type="checkbox" name="mbtiTraits" value="I" th:checked="${book.mbtiTraits.contains('I')}" /> 내향 (I)</label>
+            <label><input type="checkbox" name="mbtiTraits" value="E" th:checked="${book.mbtiTraits.contains('E')}" /> 외향 (E)</label>
+            <label><input type="checkbox" name="mbtiTraits" value="N" th:checked="${book.mbtiTraits.contains('N')}" /> 직관 (N)</label>
+            <label><input type="checkbox" name="mbtiTraits" value="S" th:checked="${book.mbtiTraits.contains('S')}" /> 감각 (S)</label>
+            <label><input type="checkbox" name="mbtiTraits" value="F" th:checked="${book.mbtiTraits.contains('F')}" /> 감정 (F)</label>
+            <label><input type="checkbox" name="mbtiTraits" value="T" th:checked="${book.mbtiTraits.contains('T')}" /> 사고 (T)</label>
+            <label><input type="checkbox" name="mbtiTraits" value="P" th:checked="${book.mbtiTraits.contains('P')}" /> 인식 (P)</label>
+            <label><input type="checkbox" name="mbtiTraits" value="J" th:checked="${book.mbtiTraits.contains('J')}" /> 판단 (J)</label>
+        </div>
+    </div>
+
+    <button type="submit">수정</button>
+</form>
+
+<!-- Delete Book Section -->
+<h2>도서 삭제</h2>
+<form th:action="@{/books/delete/{id}(id=${book.bookId})}" method="post">
+    <button type="submit" onclick="return confirm('도서를 삭제하시겠습니까?');">삭제</button>
+</form>
+
+<a th:href="@{/books}">취소</a>
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.eureka.kidsworld.domain.book.repository.BookContentRepository;
 import com.eureka.kidsworld.domain.user.entity.User;
 import com.eureka.kidsworld.global.exception.BookContentNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookContentService {
     private final BookContentRepository bookContentRepository;
 
@@ -28,8 +30,9 @@ public class BookContentService {
 
     // 도서 ID로 찾기
     @Transactional(readOnly = true)
-    public Optional<BookContent> findByBookContentId(Long bookContentId) {
-        return bookContentRepository.findById(bookContentId);
+    public BookContentDto findByBookContentId(Long bookContentId) {
+        BookContent bookContent=bookContentRepository.findById(bookContentId).orElseThrow(()->new BookContentNotFoundException("해당하는 도서가 없습니다."));
+        return convertToDto(bookContent);
     }
 
     // 도서 추가
@@ -38,15 +41,17 @@ public class BookContentService {
         return convertToDto(savedBook);
     }
 
-    public BookContentDto updateBookContent(Long bookId, BookContent updatedBookContent) {
+    @Transactional
+    public BookContentDto updateBookContent(Long bookId, BookContentDto updatedBookContent) {
         BookContent book = bookContentRepository.findById(bookId)
                 .orElseThrow(() -> new BookContentNotFoundException("해당하는 도서가 없습니다."));
 
-        book.update(updatedBookContent);
-
+//        log.info("{}",updatedBookContent);
+        book.update(updatedBookContent.toEntity());
         return convertToDto(book);
     }
 
+    @Transactional
     public void deleteBookContent(Long bookId) {
         bookContentRepository.deleteById(bookId);
     }

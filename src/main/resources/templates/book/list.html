@@ -11,48 +11,48 @@
 </div>
 
 <h1>Book List</h1>
-<a href="/books/new">Add New Book</a>
+<a href="/books/new">도서 추가</a>
 <form th:action="@{/books/recommend}" method="post" style="display: inline;">
-    <label>Recommend Books by MBTI Traits:</label>
+    <label>MBTI 기반 추천도서:</label>
 
     <!-- I/E 선택 -->
     <div>
-        <label><input type="checkbox" name="mbtiTraits" value="I"/> Introversion (I)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="E"/> Extraversion (E)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="I"/> 내향 (I)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="E"/> 외향 (E)</label>
     </div>
 
     <!-- N/S 선택 -->
     <div>
-        <label><input type="checkbox" name="mbtiTraits" value="N"/> Intuition (N)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="S"/> Sensing (S)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="N"/> 직관 (N)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="S"/> 감각 (S)</label>
     </div>
 
     <!-- F/T 선택 -->
     <div>
-        <label><input type="checkbox" name="mbtiTraits" value="F"/> Feeling (F)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="T"/> Thinking (T)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="F"/> 감정 (F)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="T"/> 사고 (T)</label>
     </div>
 
     <!-- P/J 선택 -->
     <div>
-        <label><input type="checkbox" name="mbtiTraits" value="P"/> Perceiving (P)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="J"/> Judging (J)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="P"/> 인식 (P)</label>
+        <label><input type="checkbox" name="mbtiTraits" value="J"/> 판단 (J)</label>
     </div>
 
-    <button type="submit">Get Recommendations</button>
+    <button type="submit">추천받기</button>
 </form>
 
 
 <table border="1">
     <thead>
     <tr>
-        <th>Title</th>
-        <th>Summary</th>
-        <th>Author</th>
-        <th>Publisher</th>
-        <th>Recommended Age</th>
-        <th>MBTI Traits</th>
-        <th>Actions</th>
+        <th>제목</th>
+        <th>줄거리</th>
+        <th>작가</th>
+        <th>출판사</th>
+        <th>권장연령</th>
+        <th>MBTI</th>
+        <th>보기</th>
     </tr>
     </thead>
         <tbody>
