@@ -4,22 +4,23 @@
     <title>Book Detail</title>
 </head>
 <body>
-<h1>Book Detail</h1>
+<h1>도서 상세</h1>
 <div>
-    <strong>Title:</strong> <span th:text="${book.title}">Title</span>
+    <strong>제목:</strong> <span th:text="${book.title}">Title</span>
 </div>
 <div>
-    <strong>Summary:</strong> <span th:text="${book.summary}">Summary</span>
+    <strong>줄거리:</strong> <span th:text="${book.summary}">Summary</span>
 </div>
 <div>
-    <strong>Author:</strong> <span th:text="${book.author}">Author</span>
+    <strong>작가:</strong> <span th:text="${book.author}">Author</span>
 </div>
 <div>
-    <strong>Publisher:</strong> <span th:text="${book.publisher}">Publisher</span>
+    <strong>출판사:</strong> <span th:text="${book.publisher}">Publisher</span>
 </div>
 <div>
     <strong>Recommended Age:</strong> <span th:text="${book.recommendedAge}">Age</span>
 </div>
-<a href="/books">Back to List</a>
+<a href="/books">목록으로</a>
+<a th:href="@{/books/edit/{id}(id=${book.bookId})}">도서 정보 수정</a> <!-- 수정 페이지 링크 -->
 </body>
 </html>

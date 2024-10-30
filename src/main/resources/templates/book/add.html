@@ -7,19 +7,19 @@
 <h1>Add New Book</h1>
 <form th:action="@{/books}" th:object="${book}" method="post">
     <div>
-        <label for="title">Title:</label>
+        <label for="title">제목:</label>
         <input type="text" id="title" th:field="*{title}" required />
     </div>
     <div>
-        <label for="summary">Summary:</label>
+        <label for="summary">줄거리:</label>
         <textarea id="summary" th:field="*{summary}" required></textarea>
     </div>
     <div>
-        <label for="author">Author:</label>
+        <label for="author">작가:</label>
         <input type="text" id="author" th:field="*{author}" required />
     </div>
     <div>
-        <label for="publisher">Publisher:</label>
+        <label for="publisher">출판사:</label>
         <input type="text" id="publisher" th:field="*{publisher}" required />
     </div>
     <div>
@@ -27,7 +27,7 @@
         <input type="number" id="recommendedAge" th:field="*{recommendedAge}" required />
     </div>
     <div>
-        <label for="mbtiTraits">MBTI Traits:</label>
+        <label for="mbtiTraits">MBTI:</label>
         <div>
             <label><input type="checkbox" th:field="*{mbtiTraits}" value="E" /> Extraversion (E)</label>
             <label><input type="checkbox" th:field="*{mbtiTraits}" value="I" /> Introversion (I)</label>
