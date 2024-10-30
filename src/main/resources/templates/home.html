@@ -15,18 +15,26 @@
                     <h3>User Information</h3>
                 </div>
                 <div class="card-body">
-                    <!-- 인증된 사용자인 경우 -->
+                    <!-- 인증된 사용자인 경우만 표시 -->
                     <sec:authorize access="isAuthenticated()">
                         <p><strong>Username:</strong> <span sec:authentication="name"></span></p>
                         <p><strong>Roles:</strong> <span sec:authentication="principal.authorities"></span></p>
                     </sec:authorize>
 
-                    <!-- 익명 사용자일 경우 -->
+                    <!-- 익명 사용자일 경우만 표시 -->
                     <sec:authorize access="isAnonymous()">
                         <p>You are not logged in. Please <a href="/login">log in</a>.</p>
                     </sec:authorize>
+
+                    <!-- 관리자 전용 버튼: ADMIN 권한을 가진 경우만 표시 -->
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <div class="mt-3 text-center">
+                            <a href="/admin" class="btn btn-primary">Go to Admin Page</a>
+                        </div>
+                    </sec:authorize>
                 </div>
                 <div class="card-footer text-center">
+                    <!-- 인증된 사용자일 경우 로그아웃 버튼 표시 -->
                     <sec:authorize access="isAuthenticated()">
                         <a href="/logout" class="btn btn-danger">Logout</a>
                     </sec:authorize>
