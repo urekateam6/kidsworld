@@ -1,5 +1,6 @@
 package com.eureka.kidsworld.domain.book.service;
 
+import com.eureka.kidsworld.ai.service.AiService;
 import com.eureka.kidsworld.domain.book.dto.BookContentDto;
 import com.eureka.kidsworld.domain.book.entity.BookContent;
 import com.eureka.kidsworld.domain.book.repository.BookContentRepository;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BookContentService {
     private final BookContentRepository bookContentRepository;
+    private final AiService aiService;
 
     // 전체 도서 목록 가져오기
     @Transactional(readOnly = true)
@@ -37,6 +39,12 @@ public class BookContentService {
 
     // 도서 추가
     public BookContentDto addBookContent(BookContent bookContent) {
+        if (bookContent.getMbtiTraits().isEmpty()) {
+            String title = bookContent.getTitle();
+            String author = bookContent.getAuthor();
+            String mbti = aiService.getRecommendedMbtiByBook(title, author);
+
+        }
         BookContent savedBook = bookContentRepository.save(bookContent);
         return convertToDto(savedBook);
     }

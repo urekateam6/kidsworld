@@ -50,4 +50,11 @@ public class BookContent extends BaseTimeEntity {
         this.recommendedAge = updatedBookContent.getRecommendedAge();
         this.mbtiTraits = updatedBookContent.getMbtiTraits();
     }
+
+    public void insertMbtiByAi(String mbti) {
+        String[] mbtiTraits = mbti.split("");
+        for (String mbtiTrait : mbtiTraits) {
+            this.mbtiTraits.add(mbtiTrait);
+        }
+    }
 }
