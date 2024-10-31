@@ -44,7 +44,9 @@ public class BookContentService {
             String author = bookContent.getAuthor();
             String mbti = aiService.getRecommendedMbtiByBook(title, author);
 
+            bookContent.insertMbtiByAi(mbti);
         }
+
         BookContent savedBook = bookContentRepository.save(bookContent);
         return convertToDto(savedBook);
     }
