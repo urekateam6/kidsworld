@@ -5,11 +5,13 @@ import com.eureka.kidsworld.domain.user.entity.User;
 import com.eureka.kidsworld.domain.user.repository.UserRepository;
 import com.eureka.kidsworld.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -38,10 +40,23 @@ public class UserService {
                 .nickname(userDto.getNickname())
                 .role(Role.ROLE_USER)
                 .build();
+        log.info("Role to save: {}", user.getRole());
+
         return userRepository.save(user);
     }
 
     public void deleteUserById(Long userId) {
         userRepository.deleteById(userId);
     }
+
+    // 추가된 메소드
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+    }
+
+    public void save(User user) {
+        userRepository.save(user); // 사용자의 정보를 저장
+    }
+
 }

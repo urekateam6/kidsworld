@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 세션이 필요할 때 생성
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/**", "/css/**", "/js/**", "/images/**", "/user/register", "/login", "/logout", "login.html").permitAll() // 정적 리소스 및 특정 URL 접근 허용
+                        .requestMatchers("/api/**", "/css/**", "/js/**", "/images/**", "/user/register", "/login", "/logout", "login.html", "/books/**", "/mbti/**","/mbti/question/**").permitAll() // 정적 리소스 및 특정 URL 접근 허용
                         .anyRequest().authenticated() // 나머지 요청은 인증 필요
                 );
 

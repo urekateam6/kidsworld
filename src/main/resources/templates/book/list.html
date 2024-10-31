@@ -14,34 +14,28 @@
 <a href="/books/new">도서 추가</a>
 <form th:action="@{/books/recommend}" method="post" style="display: inline;">
     <label>MBTI 기반 추천도서:</label>
-
-    <!-- I/E 선택 -->
+    <!-- (기존 체크박스들) -->
     <div>
         <label><input type="checkbox" name="mbtiTraits" value="I"/> 내향 (I)</label>
         <label><input type="checkbox" name="mbtiTraits" value="E"/> 외향 (E)</label>
     </div>
-
-    <!-- N/S 선택 -->
     <div>
         <label><input type="checkbox" name="mbtiTraits" value="N"/> 직관 (N)</label>
         <label><input type="checkbox" name="mbtiTraits" value="S"/> 감각 (S)</label>
     </div>
-
-    <!-- F/T 선택 -->
     <div>
         <label><input type="checkbox" name="mbtiTraits" value="F"/> 감정 (F)</label>
         <label><input type="checkbox" name="mbtiTraits" value="T"/> 사고 (T)</label>
     </div>
-
-    <!-- P/J 선택 -->
     <div>
         <label><input type="checkbox" name="mbtiTraits" value="P"/> 인식 (P)</label>
         <label><input type="checkbox" name="mbtiTraits" value="J"/> 판단 (J)</label>
     </div>
-
     <button type="submit">추천받기</button>
 </form>
 
+<!-- MBTI 테스트 버튼 추가 -->
+<button onclick="location.href='/mbti/question/1'">MBTI 테스트 시작하기</button>
 
 <table border="1">
     <thead>
@@ -55,28 +49,29 @@
         <th>보기</th>
     </tr>
     </thead>
-        <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.title}">Title</td>
-                <td th:text="${book.summary}">Summary</td>
-                <td th:text="${book.author}">Author</td>
-                <td th:text="${book.publisher}">Publisher</td>
-                <td th:text="${book.recommendedAge}">Age</td>
-                <td th:text="${book.mbtiTraitsAsString}">MBTI Traits</td>
-                <td>
-                    <a th:href="@{/books/{id}(id=${book.bookId})}">View</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}">Title</td>
+        <td th:text="${book.summary}">Summary</td>
+        <td th:text="${book.author}">Author</td>
+        <td th:text="${book.publisher}">Publisher</td>
+        <td th:text="${book.recommendedAge}">Age</td>
+        <td th:text="${book.mbtiTraitsAsString}">MBTI Traits</td>
+        <td>
+            <a th:href="@{/books/{id}(id=${book.bookId})}">View</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-    <script>
-        // 페이지가 로드된 후 5초 후에 성공 메시지를 숨기기
-        setTimeout(function() {
-            var messageElement = document.getElementById("successMessage");
-            if (messageElement) {
-                messageElement.style.display = "none";
-            }
-        }, 5000); // 5000ms = 5초
-    </script>
+<script>
+    // 페이지가 로드된 후 5초 후에 성공 메시지를 숨기기
+    setTimeout(function() {
+        var messageElement = document.getElementById("successMessage");
+        if (messageElement) {
+            messageElement.style.display = "none";
+        }
+    }, 5000); // 5000ms = 5초
+</script>
+</body>
 </html>

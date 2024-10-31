@@ -8,6 +8,8 @@ import com.eureka.kidsworld.domain.mbti.entity.MbtiTrait;
 import com.eureka.kidsworld.domain.mbti.repository.MbtiQuestionRepository;
 import com.eureka.kidsworld.domain.mbti.repository.MbtiResultRepository;
 import com.eureka.kidsworld.domain.mbti.repository.MbtiTraitRepository;
+import com.eureka.kidsworld.domain.user.entity.User;
+import com.eureka.kidsworld.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class MbtiService {
     private final MbtiQuestionRepository mbtiQuestionRepository;
     private final MbtiTraitRepository mbtiTraitRepository;
     private final MbtiResultRepository mbtiResultRepository; // 결과 리포지토리 추가
-
+    private final UserService userService;
 
     public MbtiQuestionDto getMbtiQuestionById(Long id) {
         MbtiQuestion question = mbtiQuestionRepository.findById(id)
@@ -73,13 +75,14 @@ public class MbtiService {
                 trait.getImagePath()
         );
     }
-    public void saveMbtiResult(Long childId, String mbtiType) {
-        MbtiResult result = MbtiResult.builder()
-                .childId(childId) // User ID를 childId로 설정
-                .mbtiResult(mbtiType)
-                .build();
-
-        mbtiResultRepository.save(result); // mbtiResultRepository를 통해 DB에 저장
+    public void saveMbtiResult(Long userId, String mbtiType) {
+        User user = userService.findById(userId); // userService를 통해 사용자 찾기
+        if (user != null) {
+            user.setChildMbti(mbtiType); // childMbti에 MBTI 저장
+            userService.save(user); // 사용자 정보 저장
+        } else {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
     }
 
 }
