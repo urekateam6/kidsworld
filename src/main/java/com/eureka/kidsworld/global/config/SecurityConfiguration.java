@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화 (필요한 경우 활성화 가능)
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/books")
                         .usernameParameter("username")
                         .permitAll()
                 )
