@@ -20,8 +20,8 @@ public class MbtiResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resultId;
 
-    @Column(name = "child_id", nullable = false)
-    private Long childId; // User ID를 저장
+    @Column(name = "user_id", nullable = false) // user_id로 수정
+    private Long userId; // User ID를 저장
 
     @Column(name = "mbti_result", nullable = false, length = 4)
     private String mbtiResult; // MBTI 결과

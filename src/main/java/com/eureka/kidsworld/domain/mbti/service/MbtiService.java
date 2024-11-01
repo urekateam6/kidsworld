@@ -2,15 +2,20 @@ package com.eureka.kidsworld.domain.mbti.service;
 
 import com.eureka.kidsworld.domain.mbti.dto.MbtiQuestionDto;
 import com.eureka.kidsworld.domain.mbti.dto.MbtiResultDto;
+import com.eureka.kidsworld.domain.mbti.entity.MbtiAnswer;
 import com.eureka.kidsworld.domain.mbti.entity.MbtiQuestion;
 import com.eureka.kidsworld.domain.mbti.entity.MbtiResult;
 import com.eureka.kidsworld.domain.mbti.entity.MbtiTrait;
+import com.eureka.kidsworld.domain.mbti.repository.MbtiAnswerRepository;
 import com.eureka.kidsworld.domain.mbti.repository.MbtiQuestionRepository;
 import com.eureka.kidsworld.domain.mbti.repository.MbtiResultRepository;
 import com.eureka.kidsworld.domain.mbti.repository.MbtiTraitRepository;
+import com.eureka.kidsworld.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +26,9 @@ public class MbtiService {
     private final MbtiQuestionRepository mbtiQuestionRepository;
     private final MbtiTraitRepository mbtiTraitRepository;
     private final MbtiResultRepository mbtiResultRepository; // 결과 리포지토리 추가
-
+    private final MbtiAnswerRepository mbtiAnswerRepository;
+    @Autowired
+    private UserService userService;
 
     public MbtiQuestionDto getMbtiQuestionById(Long id) {
         MbtiQuestion question = mbtiQuestionRepository.findById(id)
@@ -57,6 +64,14 @@ public class MbtiService {
 
         return eOrI + sOrN + tOrF + jOrP;
     }
+    public void saveAnswer(Long userId, Integer questionId, String answer) {
+        MbtiAnswer mbtiAnswer = MbtiAnswer.builder()
+                .userId(userId)
+                .questionId(questionId)
+                .answer(answer)
+                .build();
+        mbtiAnswerRepository.save(mbtiAnswer);
+    }
 
     public MbtiResultDto getMbtiResult(String mbtiType) {
         MbtiTrait trait = mbtiTraitRepository.findByMbtiType(mbtiType);
@@ -73,13 +88,19 @@ public class MbtiService {
                 trait.getImagePath()
         );
     }
-    public void saveMbtiResult(Long childId, String mbtiType) {
+    public void saveMbtiResult(Long userId, String mbtiType) {
+        // 기존 MBTI 결과 저장 로직
         MbtiResult result = MbtiResult.builder()
-                .childId(childId) // User ID를 childId로 설정
+                .userId(userId)
                 .mbtiResult(mbtiType)
+                .calculatedAt(LocalDateTime.now())
                 .build();
+        mbtiResultRepository.save(result);
 
-        mbtiResultRepository.save(result); // mbtiResultRepository를 통해 DB에 저장
+        // 회원 테이블의 child_mbti 필드 업데이트
+        userService.updateChildMbti(userId, mbtiType);
     }
+
+
 
 }

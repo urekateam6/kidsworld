@@ -44,4 +44,19 @@ public class UserService {
     public void deleteUserById(Long userId) {
         userRepository.deleteById(userId);
     }
+
+    public Long findUserIdByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(User::getUserId)
+                .orElse(null);
+    }
+
+    public void updateChildMbti(Long userId, String mbtiResult) {
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setChildMbti(mbtiResult); // user 엔티티에 setChildMbti 메서드가 필요함
+            userRepository.save(user);
+        });
+    }
+
+
 }

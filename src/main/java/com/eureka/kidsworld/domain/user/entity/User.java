@@ -22,4 +22,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public void setChildMbti(String childMbti) {
+        this.childMbti = childMbti;
+    }
+
 }
