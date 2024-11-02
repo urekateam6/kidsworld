@@ -1,5 +1,6 @@
 package com.eureka.kidsworld.domain.mbti.service;
 
+import com.eureka.kidsworld.domain.mbti.dto.MbtiHistoryDto;
 import com.eureka.kidsworld.domain.mbti.dto.MbtiQuestionDto;
 import com.eureka.kidsworld.domain.mbti.dto.MbtiResultDto;
 import com.eureka.kidsworld.domain.mbti.entity.MbtiAnswer;
@@ -12,12 +13,14 @@ import com.eureka.kidsworld.domain.mbti.repository.MbtiResultRepository;
 import com.eureka.kidsworld.domain.mbti.repository.MbtiTraitRepository;
 import com.eureka.kidsworld.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +28,9 @@ public class MbtiService {
 
     private final MbtiQuestionRepository mbtiQuestionRepository;
     private final MbtiTraitRepository mbtiTraitRepository;
-    private final MbtiResultRepository mbtiResultRepository; // 결과 리포지토리 추가
+    private final MbtiResultRepository mbtiResultRepository;
     private final MbtiAnswerRepository mbtiAnswerRepository;
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     public MbtiQuestionDto getMbtiQuestionById(Long id) {
         MbtiQuestion question = mbtiQuestionRepository.findById(id)
@@ -46,14 +48,30 @@ public class MbtiService {
 
         for (String answer : answers.values()) {
             switch (answer) {
-                case "E": eCount++; break;
-                case "I": iCount++; break;
-                case "S": sCount++; break;
-                case "N": nCount++; break;
-                case "T": tCount++; break;
-                case "F": fCount++; break;
-                case "J": jCount++; break;
-                case "P": pCount++; break;
+                case "E":
+                    eCount++;
+                    break;
+                case "I":
+                    iCount++;
+                    break;
+                case "S":
+                    sCount++;
+                    break;
+                case "N":
+                    nCount++;
+                    break;
+                case "T":
+                    tCount++;
+                    break;
+                case "F":
+                    fCount++;
+                    break;
+                case "J":
+                    jCount++;
+                    break;
+                case "P":
+                    pCount++;
+                    break;
             }
         }
 
@@ -64,7 +82,8 @@ public class MbtiService {
 
         return eOrI + sOrN + tOrF + jOrP;
     }
-    public void saveAnswer(Long userId, Integer questionId, String answer) {
+
+    public void saveAnswer(Long userId, Long questionId, String answer) {
         MbtiAnswer mbtiAnswer = MbtiAnswer.builder()
                 .userId(userId)
                 .questionId(questionId)
@@ -88,8 +107,8 @@ public class MbtiService {
                 trait.getImagePath()
         );
     }
+
     public void saveMbtiResult(Long userId, String mbtiType) {
-        // 기존 MBTI 결과 저장 로직
         MbtiResult result = MbtiResult.builder()
                 .userId(userId)
                 .mbtiResult(mbtiType)
@@ -97,10 +116,50 @@ public class MbtiService {
                 .build();
         mbtiResultRepository.save(result);
 
-        // 회원 테이블의 child_mbti 필드 업데이트
         userService.updateChildMbti(userId, mbtiType);
     }
 
+    public void deleteChildMbtiAnswers(Long userId) {
+        List<MbtiAnswer> answers = mbtiAnswerRepository.findByUserIdAndDeletedAtIsNull(userId);
+        LocalDateTime now = LocalDateTime.now();
 
+        answers.forEach(answer -> answer.setDeletedAt(now));
+        mbtiAnswerRepository.saveAll(answers);
+    }
 
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void deleteOldMbtiAnswers() {
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        mbtiAnswerRepository.deleteByDeletedAtBefore(oneMonthAgo);
+    }
+
+    public List<MbtiHistoryDto> getUserHistory(Long userId) {
+        List<MbtiAnswer> answers = mbtiAnswerRepository.findByUserIdAndDeletedAtIsNull(userId);
+        List<MbtiHistoryDto> historyDtos = new ArrayList<>();
+
+        for (MbtiAnswer answer : answers) {
+            MbtiQuestion question = mbtiQuestionRepository.findById(answer.getQuestionId())
+                    .orElseThrow(() -> new IllegalArgumentException("해당 질문이 존재하지 않습니다. Question ID: " + answer.getQuestionId()));
+
+            String selectedAnswer = "알 수 없는 선택입니다.";
+
+            if (answer.getAnswer().equals(question.getMbtiTypeA())) {
+                selectedAnswer = question.getOptionA();
+            } else if (answer.getAnswer().equals(question.getMbtiTypeB())) {
+                selectedAnswer = question.getOptionB();
+            }
+
+            MbtiHistoryDto historyDto = new MbtiHistoryDto(question.getQuestionText(), selectedAnswer);
+            historyDtos.add(historyDto);
+        }
+        return historyDtos;
+    }
+
+    public void resetMbtiAnswers(Long userId) {
+        List<MbtiAnswer> answers = mbtiAnswerRepository.findByUserIdAndDeletedAtIsNull(userId);
+        LocalDateTime now = LocalDateTime.now();
+
+        answers.forEach(answer -> answer.setDeletedAt(now));
+        mbtiAnswerRepository.saveAll(answers);
+    }
 }

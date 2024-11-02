@@ -27,16 +27,29 @@
             line-height: 1.5; /* 줄 간격 */
             text-align: center; /* 텍스트 가운데 정렬 */
         }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #007BFF; /* 링크 색상 */
-            font-size: 1.2em;
+        .button-container {
+            text-align: center; /* 버튼 중앙 정렬 */
+            margin-top: 20px; /* 상단 여백 */
         }
-        a:hover {
-            text-decoration: underline; /* 링크에 마우스 오버 효과 */
+        .btn {
+            margin: 0 10px; /* 버튼 간의 여백 */
+            font-size: 1.2em; /* 버튼 폰트 크기 */
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #c82333; /* 버튼 호버 효과 */
+        }
+        .btn-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
         }
     </style>
 </head>
@@ -45,12 +58,24 @@
 
 <!-- 이미지 추가 -->
 <img th:src="@{'/images/' + ${result.imagePath}}" alt="MBTI 이미지" />
-<br>
 
 <p th:text="'강점: ' + ${result.strength}"></p>
 <p th:text="'약점: ' + ${result.weakness}"></p>
 <p th:text="'설명: ' + ${result.description}"></p>
 
-<a href="/mbti/question/1">다시 테스트하기</a>
+<div class="button-container">
+    <!-- 다시 해보기 버튼 -->
+    <form th:action="@{/mbti/reset}" method="post" style="display: inline;">
+        <button type="submit" class="btn">다시 해보기</button>
+    </form>
+
+    <!-- MBTI 결과 삭제 버튼 -->
+    <form th:action="@{/mbti/delete}" method="post" style="display: inline;">
+        <button type="submit" class="btn">MBTI 결과 삭제하기</button>
+    </form>
+
+    <!-- 히스토리 보기 버튼 -->
+    <a th:href="@{/mbti/history}" class="btn btn-link">히스토리 보기</a>
+</div>
 </body>
 </html>

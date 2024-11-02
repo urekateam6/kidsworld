@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/books")
+                        .defaultSuccessUrl("/main")
                         .usernameParameter("username")
                         .permitAll()
                 )
@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/**", "/css/**", "/js/**", "/images/**", "/user/register", "/login", "/logout", "login.html","mbti/**").permitAll() // 정적 리소스 및 특정 URL 접근 허용
+                        .requestMatchers("/api/**", "/css/**", "/js/**", "/images/**", "/user/register", "/login", "/logout", "login.html","mbti/**","/main/**").permitAll() // 정적 리소스 및 특정 URL 접근 허용
                         .anyRequest().authenticated()
                 );
 

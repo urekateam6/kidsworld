@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내 MBTI 히스토리</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 스타일 추가 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            color: #555;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="table-container">
+    <h1>내 MBTI 히스토리</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>질문</th>
+            <th>답변</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="historyItem : ${history}">
+            <td th:text="${historyItem.question}"></td>
+            <td th:text="${historyItem.answer}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="btn-container">
+    <a href="/main" class="btn">메인 페이지로 돌아가기</a>
+</div>
+
+</body>
+</html>

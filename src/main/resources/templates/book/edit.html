@@ -1,56 +1,132 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit Book</title>
+    <title>도서 수정</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .mbti-group label {
+            display: inline-block;
+            margin-right: 10px;
+            color: #555;
+            font-weight: normal;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn-secondary {
+            background-color: #f44336;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e53935;
+        }
+    </style>
 </head>
 <body>
-<h1>Edit Book</h1>
-<form th:action="@{/books/update/{id}(id=${book.bookId})}" method="post">
-    <div>
-        <label for="title">제목:</label>
-        <input type="text" id="title" name="title" th:value="${book.title}" required />
-    </div>
-    <div>
-        <label for="summary">줄거리:</label>
-        <textarea id="summary" name="summary" required th:text="${book.summary}"></textarea>
-    </div>
-    <div>
-        <label for="author">작가:</label>
-        <input type="text" id="author" name="author" th:value="${book.author}" required />
-    </div>
-    <div>
-        <label for="publisher">출판사:</label>
-        <input type="text" id="publisher" name="publisher" th:value="${book.publisher}" required />
-    </div>
-    <div>
-        <label for="recommendedAge">권장연령:</label>
-        <input type="number" id="recommendedAge" name="recommendedAge" th:value="${book.recommendedAge}" required />
-    </div>
-
-    <!-- MBTI Traits -->
-    <div>
-        <label>MBTI:</label>
-        <div>
-            <label><input type="checkbox" name="mbtiTraits" value="I" th:checked="${book.mbtiTraits.contains('I')}" /> 내향 (I)</label>
-            <label><input type="checkbox" name="mbtiTraits" value="E" th:checked="${book.mbtiTraits.contains('E')}" /> 외향 (E)</label>
-            <label><input type="checkbox" name="mbtiTraits" value="N" th:checked="${book.mbtiTraits.contains('N')}" /> 직관 (N)</label>
-            <label><input type="checkbox" name="mbtiTraits" value="S" th:checked="${book.mbtiTraits.contains('S')}" /> 감각 (S)</label>
-            <label><input type="checkbox" name="mbtiTraits" value="F" th:checked="${book.mbtiTraits.contains('F')}" /> 감정 (F)</label>
-            <label><input type="checkbox" name="mbtiTraits" value="T" th:checked="${book.mbtiTraits.contains('T')}" /> 사고 (T)</label>
-            <label><input type="checkbox" name="mbtiTraits" value="P" th:checked="${book.mbtiTraits.contains('P')}" /> 인식 (P)</label>
-            <label><input type="checkbox" name="mbtiTraits" value="J" th:checked="${book.mbtiTraits.contains('J')}" /> 판단 (J)</label>
+<div class="container">
+    <h1>도서 수정</h1>
+    <form th:action="@{/books/update/{id}(id=${book.bookId})}" method="post">
+        <div class="form-group">
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" th:value="${book.title}" required />
         </div>
-    </div>
+        <div class="form-group">
+            <label for="summary">줄거리:</label>
+            <textarea id="summary" name="summary" required th:text="${book.summary}"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="author">작가:</label>
+            <input type="text" id="author" name="author" th:value="${book.author}" required />
+        </div>
+        <div class="form-group">
+            <label for="publisher">출판사:</label>
+            <input type="text" id="publisher" name="publisher" th:value="${book.publisher}" required />
+        </div>
+        <div class="form-group">
+            <label for="recommendedAge">권장 연령:</label>
+            <input type="number" id="recommendedAge" name="recommendedAge" th:value="${book.recommendedAge}" required />
+        </div>
+        <div class="form-group">
+            <label>MBTI:</label>
+            <div class="mbti-group">
+                <label><input type="checkbox" name="mbtiTraits" value="I" th:checked="${book.mbtiTraits.contains('I')}" /> 내향 (I)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="E" th:checked="${book.mbtiTraits.contains('E')}" /> 외향 (E)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="N" th:checked="${book.mbtiTraits.contains('N')}" /> 직관 (N)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="S" th:checked="${book.mbtiTraits.contains('S')}" /> 감각 (S)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="F" th:checked="${book.mbtiTraits.contains('F')}" /> 감정 (F)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="T" th:checked="${book.mbtiTraits.contains('T')}" /> 사고 (T)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="P" th:checked="${book.mbtiTraits.contains('P')}" /> 인식 (P)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="J" th:checked="${book.mbtiTraits.contains('J')}" /> 판단 (J)</label>
+            </div>
+        </div>
+        <button type="submit" class="btn">저장</button>
+    </form>
 
-    <button type="submit">수정</button>
-</form>
-
-<!-- Delete Book Section -->
-<h2>도서 삭제</h2>
-<form th:action="@{/books/delete/{id}(id=${book.bookId})}" method="post">
-    <button type="submit" onclick="return confirm('도서를 삭제하시겠습니까?');">삭제</button>
-</form>
-
-<a th:href="@{/books}">취소</a>
+    <form th:action="@{/books/delete/{id}(id=${book.bookId})}" method="post">
+        <button type="submit" class="btn btn-secondary" onclick="return confirm('도서를 삭제하시겠습니까?');">삭제</button>
+    </form>
+    <a th:href="@{/books}" class="btn">취소</a>
+</div>
 </body>
 </html>

@@ -1,84 +1,180 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Book List</title>
+    <title>도서 목록</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn, .mbti-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+        }
+
+        .btn:hover, .mbti-btn:hover {
+            background-color: #45a049;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border: 1px solid #c3e6cb;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+            color: #555;
+        }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group div {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .mbti-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
 
-<!-- 성공 메시지 알림 표시 -->
-<div th:if="${successMessage}" style="background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; margin-bottom: 20px;">
-    <p th:text="${successMessage}">도서가 추가되었습니다.</p>
-</div>
-
-<h1>Book List</h1>
-<a href="/books/new">도서 추가</a>
-<form th:action="@{/books/recommend}" method="post" style="display: inline;">
-    <label>MBTI 기반 추천도서:</label>
-
-    <!-- I/E 선택 -->
-    <div>
-        <label><input type="checkbox" name="mbtiTraits" value="I"/> 내향 (I)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="E"/> 외향 (E)</label>
+    <!-- 성공 메시지 알림 표시 -->
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}">도서가 추가되었습니다.</p>
     </div>
 
-    <!-- N/S 선택 -->
-    <div>
-        <label><input type="checkbox" name="mbtiTraits" value="N"/> 직관 (N)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="S"/> 감각 (S)</label>
+    <h1>도서 목록</h1>
+
+    <!-- 도서 추가 버튼 -->
+    <div style="text-align: right; margin-bottom: 20px;">
+        <a href="/books/new" class="btn">도서 추가</a>
     </div>
 
-    <!-- F/T 선택 -->
-    <div>
-        <label><input type="checkbox" name="mbtiTraits" value="F"/> 감정 (F)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="T"/> 사고 (T)</label>
-    </div>
-
-    <!-- P/J 선택 -->
-    <div>
-        <label><input type="checkbox" name="mbtiTraits" value="P"/> 인식 (P)</label>
-        <label><input type="checkbox" name="mbtiTraits" value="J"/> 판단 (J)</label>
-    </div>
-
-    <button type="submit">추천받기</button>
-</form>
-
-<!-- MBTI 테스트 버튼 추가 -->
-<button onclick="location.href='/mbti/question/1'">MBTI 테스트 시작하기</button>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>제목</th>
-        <th>줄거리</th>
-        <th>작가</th>
-        <th>출판사</th>
-        <th>권장연령</th>
-        <th>MBTI</th>
-        <th>보기</th>
-    </tr>
-    </thead>
+    <!-- MBTI 기반 추천도서 폼 -->
+    <form th:action="@{/books/recommend}" method="post" style="margin-bottom: 20px;">
+        <div class="checkbox-group">
+            <label>MBTI 기반 추천도서:</label>
+            <!-- I/E 선택 -->
+            <div>
+                <label><input type="checkbox" name="mbtiTraits" value="I"/> 내향 (I)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="E"/> 외향 (E)</label>
+            </div>
+            <!-- N/S 선택 -->
+            <div>
+                <label><input type="checkbox" name="mbtiTraits" value="N"/> 직관 (N)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="S"/> 감각 (S)</label>
+            </div>
+            <!-- F/T 선택 -->
+            <div>
+                <label><input type="checkbox" name="mbtiTraits" value="F"/> 감정 (F)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="T"/> 사고 (T)</label>
+            </div>
+            <!-- P/J 선택 -->
+            <div>
+                <label><input type="checkbox" name="mbtiTraits" value="P"/> 인식 (P)</label>
+                <label><input type="checkbox" name="mbtiTraits" value="J"/> 판단 (J)</label>
+            </div>
+        </div>
+        <button type="submit" class="mbti-btn">추천받기</button>
+    </form>
+    
+    <!-- 도서 목록 테이블 -->
+    <table>
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>줄거리</th>
+            <th>작가</th>
+            <th>출판사</th>
+            <th>권장 연령</th>
+            <th>MBTI</th>
+            <th>보기</th>
+        </tr>
+        </thead>
         <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.title}">Title</td>
-                <td th:text="${book.summary}">Summary</td>
-                <td th:text="${book.author}">Author</td>
-                <td th:text="${book.publisher}">Publisher</td>
-                <td th:text="${book.recommendedAge}">Age</td>
-                <td th:text="${book.mbtiTraitsAsString}">MBTI Traits</td>
-                <td>
-                    <a th:href="@{/books/{id}(id=${book.bookId})}">View</a>
-                </td>
-            </tr>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}">Title</td>
+            <td th:text="${book.summary}">Summary</td>
+            <td th:text="${book.author}">Author</td>
+            <td th:text="${book.publisher}">Publisher</td>
+            <td th:text="${book.recommendedAge}">Age</td>
+            <td th:text="${book.mbtiTraitsAsString}">MBTI Traits</td>
+            <td>
+                <a th:href="@{/books/{id}(id=${book.bookId})}" class="btn-small">보기</a>
+            </td>
+        </tr>
         </tbody>
     </table>
+</div>
 
-    <script>
-        // 페이지가 로드된 후 5초 후에 성공 메시지를 숨기기
-        setTimeout(function() {
-            var messageElement = document.getElementById("successMessage");
-            if (messageElement) {
-                messageElement.style.display = "none";
-            }
-        }, 5000); // 5000ms = 5초
-    </script>
+<script>
+    // 성공 메시지를 5초 후에 자동으로 숨기기
+    setTimeout(function() {
+        var messageElement = document.querySelector(".success-message");
+        if (messageElement) {
+            messageElement.style.display = "none";
+        }
+    }, 5000);
+</script>
+</body>
 </html>

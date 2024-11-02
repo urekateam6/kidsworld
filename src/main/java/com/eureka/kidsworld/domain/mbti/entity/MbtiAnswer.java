@@ -24,7 +24,7 @@ public class MbtiAnswer {
     private Long userId;
 
     @Column(name = "question_id", nullable = false)
-    private Integer questionId;
+    private Long questionId;
 
     @Column(name = "answer", nullable = false, length = 1)
     private String answer;
@@ -39,9 +39,13 @@ public class MbtiAnswer {
     public void setCreatedAt() {
         this.createdAt = LocalDateTime.now();
     }
+    private LocalDateTime deletedAt;
 
-    @PreUpdate
-    public void setUpdatedAt() {
-        this.updatedAt = LocalDateTime.now();
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
     }
 }

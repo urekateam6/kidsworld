@@ -56,7 +56,7 @@ public class BookContentController {
     public String updateBook(@PathVariable Long id, @ModelAttribute BookContentDto bookContentDto, RedirectAttributes redirectAttributes) {
         bookContentService.updateBookContent(id, bookContentDto);
         redirectAttributes.addFlashAttribute("successMessage", "도서가 수정되었습니다.");
-        return "redirect:/books/" + id; // 수정 후 detail 페이지로 이동
+        return "redirect:/books/" + id;
     }
 
     @PostMapping("/delete/{id}")
@@ -70,7 +70,7 @@ public class BookContentController {
     public String getBookDetail(@PathVariable Long id, Model model) {
         BookContentDto bookDto = bookContentService.getBookContentById(id);
         model.addAttribute("book", bookDto);
-        return "book/detail"; // book/detail.html 페이지를 렌더링
+        return "book/detail";
     }
 
     // 선택된 MBTI 요소에 맞춰 도서 추천

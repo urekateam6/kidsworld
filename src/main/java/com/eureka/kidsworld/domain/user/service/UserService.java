@@ -13,10 +13,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository UserRepository;
+    private final UserRepository userRepository; // 수정: UserRepository 중복 제거
     private final PasswordEncoder passwordEncoder;
-
-    private final UserRepository userRepository;
 
     public Optional<User> findByUserId(Long userId) {
         return userRepository.findByUserId(userId);
@@ -58,5 +56,17 @@ public class UserService {
         });
     }
 
+    public void clearChildMbti(Long userId) {
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setChildMbti(null); // child_mbti를 null로 설정
+            userRepository.save(user); // 변경사항 저장
+        });
+
+    }
+    public String findNicknameByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(User::getNickname)
+                .orElse("사용자");
+    }
 
 }

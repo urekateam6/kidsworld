@@ -1,26 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Book Detail</title>
+    <title>도서 상세</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+        }
+
+        .detail-item strong {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-<h1>도서 상세</h1>
-<div>
-    <strong>제목:</strong> <span th:text="${book.title}">Title</span>
+<div class="container">
+    <h1>도서 상세</h1>
+    <div class="detail-item">
+        <strong>제목:</strong> <span th:text="${book.title}">Title</span>
+    </div>
+    <div class="detail-item">
+        <strong>줄거리:</strong> <span th:text="${book.summary}">Summary</span>
+    </div>
+    <div class="detail-item">
+        <strong>작가:</strong> <span th:text="${book.author}">Author</span>
+    </div>
+    <div class="detail-item">
+        <strong>출판사:</strong> <span th:text="${book.publisher}">Publisher</span>
+    </div>
+    <div class="detail-item">
+        <strong>권장 연령:</strong> <span th:text="${book.recommendedAge}">Age</span>
+    </div>
+    <div class="actions">
+        <a href="/books" class="btn">목록으로</a>
+        <a th:href="@{/books/edit/{id}(id=${book.bookId})}" class="btn">도서 정보 수정</a>
+    </div>
 </div>
-<div>
-    <strong>줄거리:</strong> <span th:text="${book.summary}">Summary</span>
-</div>
-<div>
-    <strong>작가:</strong> <span th:text="${book.author}">Author</span>
-</div>
-<div>
-    <strong>출판사:</strong> <span th:text="${book.publisher}">Publisher</span>
-</div>
-<div>
-    <strong>Recommended Age:</strong> <span th:text="${book.recommendedAge}">Age</span>
-</div>
-<a href="/books">목록으로</a>
-<a th:href="@{/books/edit/{id}(id=${book.bookId})}">도서 정보 수정</a> <!-- 수정 페이지 링크 -->
 </body>
 </html>
